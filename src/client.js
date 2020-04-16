@@ -1,8 +1,9 @@
 const localtunnel = require('localtunnel');
+const openBrowser = require('open');
 const express = require('express');
 const path = require('path');
-const open = require('open');
 const app = express();
+const fs = require('fs');
 
 const PORT = 8998;
 
@@ -44,25 +45,19 @@ elements.publishedDirectoryTrigger.addEventListener('click', () =>
 );
 
 elements.publishedDirectory.addEventListener('change', (e) => {
-  if (e.target.files.length === 0) return;
+  if (e.target.files.length === 0) {
+    showToasterMessage('No files found');
+    return;
+  }
 
-  const shortestPartCount = Math.min(
-    ...[...e.target.files].map((file) => file.path.split('/').length)
-  );
-  hostedDirectoryPath = e.target.files[0].path
-    .split('/')
-    .slice(0, shortestPartCount - 1)
-    .join('/');
-
-  hostedFilePaths = [...e.target.files].map((file) =>
-    file.webkitRelativePath.split('/').slice(1).join('/')
-  );
+  hostedDirectoryPath = e.target.files[0].path;
+  hostedFilePaths = fs.readdirSync(e.target.files[0].path);
 
   elements.hostedFileNames.innerHTML = hostedFilePaths
     .map((path) => `<div class="list-item">${path}</div>`)
     .join('');
 
-  elements.hostedFilesCount.innerHTML = e.target.files.length;
+  elements.hostedFilesCount.innerHTML = hostedFilePaths.length;
 
   showView(views.startHosting);
   elements.back.style.display = 'block';
@@ -92,7 +87,7 @@ function showToasterMessage(message) {
 
   toasterTimeout = setTimeout(() => {
     elements.toaster.classList.remove('visible');
-  }, 5000);
+  }, 3000);
 }
 
 function copyTextToClipboard(text) {
@@ -130,7 +125,7 @@ function startHosting() {
 
         const label = document.createElement('span');
         label.innerHTML = link;
-        label.addEventListener('click', () => open(link));
+        label.addEventListener('click', () => openBrowser(link));
 
         const copyLink = document.createElement('button');
         copyLink.innerHTML = '📋';
@@ -147,10 +142,7 @@ function startHosting() {
       });
 
       showView(views.hosting);
-
-      setTimeout(() => {
-        showToasterMessage(`Now hosting ${hostedFilePaths.length} file(s)`);
-      }, 600);
+      showToasterMessage(`Now hosting ${hostedFilePaths.length} file(s)`);
     });
   });
 }
@@ -159,4 +151,5 @@ function stopHosting() {
   server.close();
   tunnel.close();
   showView(views.selectFolder);
+  showToasterMessage('Hosting stopped');
 }
