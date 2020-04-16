@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="style.css" />
+    <title></title>
+  </head>
+  <body>
+    <div id="back">Back</div>
+    <div id="toaster"></div>
+    <input id="clipboard" />
+    <div id="view-select-folder" class="view">
+      <div>
+        <h1>Home Share</h1>
+        <ol>
+          <li>Select folder to host</li>
+          <li>Share link to your files</li>
+        </ol>
+      </div>
+      <button id="published-directory-trigger">
+        Select folder
+      </button>
+      <input type="file" webkitdirectory id="published-directory" hidden />
+    </div>
+
+    <div id="view-start-hosting" class="view">
+      <div>
+        <h2><span id="hosted-files-count"></span> file(s)</h2>
+        <div id="hosted-file-names" class="list-container"></div>
+      </div>
+      <button id="start-hosting">Start hosting</button>
+    </div>
+
+    <div id="view-hosting" class="view">
+      <div>
+        <h2>Hosting</h2>
+        <div id="hosted-file-links" class="list-container"></div>
+      </div>
+      <button id="stop-hosting">Stop hosting</button>
+    </div>
+
+    <script src="client.js"></script>
+  </body>
+</html>

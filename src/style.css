@@ -1,0 +1,143 @@
+:root {
+  --color-cta: rgb(235, 173, 131);
+}
+
+* {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
+    Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-weight: 200;
+  outline: none;
+  cursor: default;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  background: #334;
+  background: linear-gradient(
+    339deg,
+    rgba(15, 15, 31, 1) 25%,
+    rgba(100, 100, 120, 1) 100%
+  );
+  overflow: hidden;
+}
+
+#back {
+  z-index: 99;
+  position: absolute;
+  left: 16px;
+  top: 16px;
+  font-size: 18px;
+  cursor: pointer;
+  display: none;
+  color: white;
+}
+
+.view {
+  display: none; /* programmatically flex */
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  height: 100%;
+  box-sizing: border-box;
+  padding: 32px;
+}
+
+.list-container {
+  min-width: 400px;
+  max-width: 100%;
+  min-height: 100px;
+  max-height: 300px;
+  overflow-y: scroll;
+  background: #eee;
+  border: solid #eee 16px;
+  margin-top: 16px;
+  border-radius: 4px;
+}
+
+.list-item:not(:first-child) {
+  margin-top: 4px;
+}
+
+h1 {
+  margin: 0;
+  font-size: 42px;
+  color: white;
+}
+
+h2 {
+  font-size: 22px;
+  margin: 0;
+  color: white;
+}
+
+#start-hosting {
+  margin-top: 32px;
+}
+
+button {
+  font-size: 18px;
+  border: none;
+  cursor: pointer;
+  padding: 16px;
+  border-radius: 4px;
+  background: #ccf;
+  transition: all 30ms;
+}
+
+button:active {
+  transform: scale(0.98, 0.98);
+}
+
+#stop-hosting {
+  margin-top: 32px;
+}
+
+.link {
+  text-decoration: underline;
+  color: #556;
+  cursor: pointer;
+}
+
+.icon {
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  background: none;
+  margin-left: 8px;
+}
+
+ol {
+  color: white;
+  margin: 0;
+  margin: 36px 0;
+}
+
+ol > li:not(:first-child) {
+  margin-top: 6px;
+}
+
+#clipboard {
+  position: absolute;
+  top: -100px;
+  left: -9999px;
+}
+
+#toaster {
+  position: absolute;
+  top: -40px;
+  padding: 8px;
+  left: 50%;
+  background: #88c;
+  color: white;
+  transform: translateX(-50%);
+  border-radius: 4px;
+  transition: top 300ms;
+  cursor: not-allowed;
+}
+
+#toaster.visible {
+  top: 8px;
+}
