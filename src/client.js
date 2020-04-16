@@ -125,7 +125,8 @@ function startHosting() {
         listItem.classList.add('list-item');
 
         const label = document.createElement('span');
-        label.innerHTML = link;
+        label.innerHTML = fileName;
+        label.title = 'Open in browser';
         label.classList.add('link');
         label.addEventListener('click', () => openBrowser(link));
 
