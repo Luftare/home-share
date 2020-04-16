@@ -97,7 +97,7 @@ button:active {
 .link {
   text-decoration: underline;
   color: #556;
-  cursor: pointer;
+  cursor: pointer !important;
 }
 
 .icon {

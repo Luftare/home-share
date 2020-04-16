@@ -51,7 +51,9 @@ elements.publishedDirectory.addEventListener('change', (e) => {
   }
 
   hostedDirectoryPath = e.target.files[0].path;
-  hostedFilePaths = fs.readdirSync(e.target.files[0].path);
+  hostedFilePaths = fs
+    .readdirSync(e.target.files[0].path)
+    .filter(isVisibleFile);
 
   elements.hostedFileNames.innerHTML = hostedFilePaths
     .map((path) => `<div class="list-item">${path}</div>`)
@@ -87,7 +89,7 @@ function showToasterMessage(message) {
 
   toasterTimeout = setTimeout(() => {
     elements.toaster.classList.remove('visible');
-  }, 3000);
+  }, 4000);
 }
 
 function copyTextToClipboard(text) {
@@ -121,10 +123,10 @@ function startHosting() {
       fileLinks.forEach(({ link, fileName }) => {
         const listItem = document.createElement('div');
         listItem.classList.add('list-item');
-        listItem.classList.add('link');
 
         const label = document.createElement('span');
         label.innerHTML = link;
+        label.classList.add('link');
         label.addEventListener('click', () => openBrowser(link));
 
         const copyLink = document.createElement('button');
@@ -145,6 +147,17 @@ function startHosting() {
       showToasterMessage(`Now hosting ${hostedFilePaths.length} file(s)`);
     });
   });
+}
+
+function isVisibleFile(path) {
+  const parts = path.split('/');
+  const lastPart = parts[parts.length - 1];
+  const startsWithDot = lastPart.substring(0, 1) === '.';
+
+  if (startsWithDot) return false;
+
+  const containsDot = lastPart.split('.').length > 1;
+  return containsDot;
 }
 
 function stopHosting() {
